@@ -1,13 +1,36 @@
 import os
 import argparse
+import fiona
+import warnings
+from fiona.errors import FionaDeprecationWarning
+from shapely.geometry import shape, mapping, Polygon, MultiPolygon
+
+# suppress the fiona class deprecation warning
+warnings.filterwarnings('ignore', category=FionaDeprecationWarning)
 
 def remove_spikes(
     input_file_path,
     output_file_path,
     minimum_angle,
     is_verbose):
-    print("Not implemented yet!")
-    return 0
+        with fiona.open(input_file_path, 'r') as src:
+            #grab the metadata
+            metadata = src.meta
+
+            #define a new schema for the output file
+            new_schema = {
+                'geometry' : 'MultiPolygon',
+                'properties' : metadata['schema']['properties']
+            }
+
+            #open the output file in write mode
+            with fiona.open(output_file_path, 'w', crs=src.crs, driver='GPKG', schema=new_schema) as dst:
+                #iterate the geometries of the input file
+                for feature in src:
+                    geom = shape(feature['geometry'])
+                    print(geom)
+            print(metadata)
+        return 0
 
 def main():
     parser = argparse.ArgumentParser(description="Remove spikes from polygons by filtering out vertices forming angles sharper than a threshold angle")
