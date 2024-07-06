@@ -42,10 +42,10 @@ Arguments:
 
 Example:
 ```
-python unspike.py -i input.gpkg -o output.gpkg -a 45 -v
+python unspike.py -i input.gpkg -o output.gpkg -a 4.5 -v
 ```
 
-This command will process `input.gpkg`, remove spikes with angles less than 45 degrees, and save the result to `output.gpkg` with verbose output.
+This command will process `input.gpkg`, remove spikes with angles less than 4.5 degrees, and save the result to `output.gpkg` with verbose output.
 
 ## How It Works
 
