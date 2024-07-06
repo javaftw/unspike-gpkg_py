@@ -1,4 +1,4 @@
-# Unspike gpkg
+# Unspike gpkg (Python stand-alone version)
 
 **unspike** is a tool designed to remove 'spikes' from polygons in GeoPackage files by filtering out vertices that form angles sharper than a specified threshold. It works with both 2D and 3D geometries and supports both single Polygons and MultiPolygons.
 
