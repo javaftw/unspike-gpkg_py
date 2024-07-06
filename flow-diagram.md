@@ -1,4 +1,4 @@
-[
+```mermaid
 graph TD
     A[Start] --> B[Parse Command Line Arguments]
     B --> C[Open Input GeoPackage]
@@ -33,4 +33,4 @@ graph TD
         CA3 --> CA4[Apply Dot Product Formula]
         CA4 --> CA5[Convert to Degrees]
     end
-]
+```
