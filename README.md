@@ -31,7 +31,7 @@ pip install fiona numpy shapely pyproj
 To use the tool, run the script from the command line with the following arguments:
 
 ```
-python unspike.py -i <input_file> -o <output_file> -a <minimum_angle> [-v]
+python unspike.py -i <input_file> [-o <output_file>] -a <minimum_angle> [-v]
 ```
 
 Arguments:
