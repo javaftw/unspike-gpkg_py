@@ -6,14 +6,17 @@ from shapely.validation import make_valid
 import os
 import warnings
 from fiona.errors import FionaDeprecationWarning
+from pyproj import CRS
 
 # suppress the fiona class deprecation warning
 warnings.filterwarnings('ignore', category=FionaDeprecationWarning)
+# suppress the pyproj warning about lossy conversion
+warnings.filterwarnings('ignore', category=UserWarning)
 
 
 def calculate_angle(p0, p1, p2):
-    v1 = np.array(p0[:2]) - np.array(p1[:2])
-    v2 = np.array(p2[:2]) - np.array(p1[:2])
+    v1 = np.array(p0) - np.array(p1)
+    v2 = np.array(p2) - np.array(p1)
 
     dot_product = np.dot(v1, v2)
     norm_v1 = np.linalg.norm(v1)
@@ -90,9 +93,10 @@ def unspike_gpkg(input_path, output_path, min_angle, verbose):
 
     with fiona.open(input_path, 'r') as src:
         meta = src.meta
+        input_crs = CRS(src.crs)
 
         if verbose:
-            print(f"Input CRS: {src.crs}")
+            print(f"Input CRS: {input_crs}")
 
         # Define a new schema that supports both Polygon and MultiPolygon
         new_schema = {'geometry': 'MultiPolygon', 'properties': meta['schema']['properties']}
@@ -129,7 +133,7 @@ def unspike_gpkg(input_path, output_path, min_angle, verbose):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Remove spikes from polygons by filtering out vertices forming angles sharper than a threshold angle")
+        description="Remove spikes from polygons by filtering out vertices forming angles sharper than a threshold angle in 3D space")
     parser.add_argument('-i', '--input', required=True, help='Path to the input geopackage file.')
     parser.add_argument('-o', '--output', help='Path to the output geopackage file.')
     parser.add_argument('-a', '--angle', required=True, type=float, help='Minimum angle threshold (degrees).')
@@ -148,6 +152,7 @@ def main():
 
     print(
         f"\nProcess completed. {total_spikes_removed} spike/s removed." if total_spikes_removed > 0 else "\nProcess completed. No spikes found.")
+
 
 if __name__ == "__main__":
     main()
