@@ -19,8 +19,10 @@ jobs:
       with:
         python-version: '3.12'
 
-    - name: Install distutils
-      run: sudo apt-get install python3.12-distutils
+    - name: Install setuptools and wheel
+      run: |
+        python -m ensurepip
+        python -m pip install --upgrade setuptools wheel
 
     - name: Install dependencies
       run: |
