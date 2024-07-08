@@ -1,5 +1,5 @@
 fiona
-numpy
+numpy==1.23.0
 pyproj
 shapely
 pystest
