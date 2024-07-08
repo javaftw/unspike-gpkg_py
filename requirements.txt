@@ -1,0 +1,4 @@
+fiona
+numpy
+pyproj
+shapely
