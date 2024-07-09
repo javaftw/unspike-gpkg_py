@@ -2,6 +2,11 @@
 
 **unspike** is a tool designed to remove 'spikes' from polygons in GeoPackage files by filtering out vertices that form angles sharper than a specified threshold. It works with both 2D and 3D geometries and supports both single Polygons and MultiPolygons.
 
+### Before and After
+
+![Before unspike](img/before.png)
+![After unspike](img/after.png)
+
 ## Features
 
 - Removes spike vertices from Polygons and MultiPolygons
